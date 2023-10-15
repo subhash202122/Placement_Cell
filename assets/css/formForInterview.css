@@ -1,6 +1,14 @@
-body{
+/* body{
     background-color: rgb(251,251,251);
+} */
+body {
+  background-color: #00FF00; /* Greenish background color */
+  color: #FFFFFF; /* White text color */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+  font-family: Arial, sans-serif; /* Set a default font family */
 }
+
 section{
     text-align: center;
     margin: 5%;
