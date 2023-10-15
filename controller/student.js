@@ -14,32 +14,53 @@ module.exports.dashboard = async function (req, res) {
 }
 
 // add student page
-module.exports.addStudentPage = async function (req, res) {
-    return res.render('addStudent', {
-        title: "Student"
-    })
-}
+// module.exports.addStudentPage = async function (req, res) {
+//     return res.render('addStudent', {
+//         title: "Student"
+//     })
+// }
+// module.exports.addStudent = async function (req, res) {
+//     try {
+//         if (!validator.isEmail(req.body.email)) {
+//             req.flash('error' ,'Enter valid Email !!');
+//             return res.redirect('back');
+//         } else {
+//             const presentStudent = await Student.findOne({ email: req.body.email });
+//             if (presentStudent) {
+//                 req.flash('error' ,'Student Already Present!!');
+//                 return res.redirect('back');
+//             } else {
+//                 const addStudent = await Student(req.body);
+//                 await addStudent.save();
+//                 req.flash('success' , 'Student Added Successfully !!');
+//                 return res.redirect('/employee/dashboard');
+//             }
+//         }
+//     } catch (error) {
+//         return res.send('Error in adding student');
+//     }
+// }
 module.exports.addStudent = async function (req, res) {
-    try {
-        if (!validator.isEmail(req.body.email)) {
-            req.flash('error' ,'Enter valid Email !!');
-            return res.redirect('back');
-        } else {
-            const presentStudent = await Student.findOne({ email: req.body.email });
-            if (presentStudent) {
-                req.flash('error' ,'Student Already Present!!');
-                return res.redirect('back');
-            } else {
-                const addStudent = await Student(req.body);
-                await addStudent.save();
-                req.flash('success' , 'Student Added Successfully !!');
-                return res.redirect('/employee/dashboard');
-            }
-        }
-    } catch (error) {
-        return res.send('Error in adding student');
+  try {
+    if (!validator.isEmail(req.body.email)) {
+      req.flash('error', 'Enter a valid Email !!');
+      return res.redirect('back');
+    } else {
+      const presentStudent = await Student.findOne({ email: req.body.email });
+      if (presentStudent) {
+        req.flash('error', 'Student Already Present!!');
+        return res.redirect('back');
+      } else {
+        const addStudent = await Student.create(req.body);  // Use create() to create a new student
+        req.flash('success', 'Student Added Successfully !!');
+        return res.redirect('/employee/dashboard');
+      }
     }
-}
+  } catch (error) {
+    console.error('Error in adding student:', error);
+    return res.send('Error in adding student');
+  }
+};
 
 module.exports.downloadData = async function (req, res) {
     const studentList = await Student.find({});
